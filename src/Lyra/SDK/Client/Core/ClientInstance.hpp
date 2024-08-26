@@ -15,11 +15,26 @@ public:
 	BUILD_ACCESS(this, float*, FovY, 0x704);
 
 	void grabMouse() {
-		Memory::CallVFunc<331, void>(this);
+
+		static uintptr_t indexRef;
+
+		if (indexRef == 0) {
+			indexRef = Memory::findSig("48 8B 80 ? ? ? ? FF 15 ? ? ? ? 90 48 85 DB 74 08 48 8B CB E8 ? ? ? ? 48 8B 8D ? ? ? ? E8");
+		}
+
+		int index = *reinterpret_cast<int *>(indexRef + 3) / 8;
+		Memory::CallVFuncI<void>(index, this);
 	}
 
 	void releaseMouse() {
-		Memory::CallVFunc<332, void>(this);
+		static uintptr_t indexRef;
+
+		if (indexRef == 0) {
+			indexRef = Memory::findSig("48 8B 80 ? ? ? ? FF 15 ? ? ? ? 90 48 85 DB 74 08 48 8B CB E8 ? ? ? ? 48 8B 8D ? ? ? ? E8");
+		}
+
+		int index = *reinterpret_cast<int *>(indexRef + 3) / 8;
+		Memory::CallVFuncI<void>(index + 1, this);
 	}
 
 	BlockSource* getBlockSource() {
@@ -27,7 +42,15 @@ public:
 	}
 
 	LocalPlayer* getLocalPlayer() {
-		return Memory::CallVFunc<29, LocalPlayer*>(this);
+		static uintptr_t indexRef;
+
+		if (indexRef == 0) {
+			indexRef = Memory::findSig("49 8B 00 49 8B C8 48 8B 80 ? ? ? ? FF 15 ? ? ? ? 48 85 C0 0F 84 ? ? ? ? 0F");
+		}
+
+		int index = *reinterpret_cast<int*>(indexRef + 9) / 8;
+
+		return Memory::CallVFuncI<LocalPlayer*>(index, this);
 	}
 
 

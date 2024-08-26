@@ -130,22 +130,36 @@ public:
 	BUILD_ACCESS(this, int16_t, hurtTime, 0x214);
     BUILD_ACCESS(this, Level*, level, 0x258);
 	BUILD_ACCESS(this, StateVectorComponent*, stateVector, 0x298);
-    BUILD_ACCESS(this, std::string, playerName, 0x1D18);
+    BUILD_ACCESS(this, std::string, playerName, 0xC88);
 
-	template <typename Component>
-	Component* tryGet() {
-		return this->getEntityContext().enttRegistry.try_get<Component>(this->getEntityContext().entity);
-	}
+    template<typename Component>
+    Component* tryGet(uintptr_t addr) {
+
+        uintptr_t* basicReg;
+        uint32_t id;
+
+        auto a1 = **(uintptr_t***)(this + 0x8);
+        auto a2 = *(uintptr_t*)(this + 0x10);
+
+        using efunc = Component * (__thiscall*)(uintptr_t, uintptr_t*);
+        auto func = reinterpret_cast<efunc>(addr);
+        return func(reinterpret_cast<uintptr_t>(a1), &a2);
+    }
+
 	EntityContext& getEntityContext() {
 		return Memory::direct_access<EntityContext>(this, 0x8);
 	}
 
 	MoveInputComponent* getMoveInputHandler() {
-		return tryGet<MoveInputComponent>();
+        static uintptr_t sig = Memory::findSig(std::string("48 89 5C 24 ? 57 48 83 EC ? 48 8B") + " " + "DA BA 2E CD 8B 46");
+
+        return tryGet<MoveInputComponent>(sig);
 	}
 
 	AABBShapeComponent* getAABBShapeComponent() {
-		return tryGet<AABBShapeComponent>();
+        static uintptr_t sig = Memory::findSig(std::string("48 89 5C 24 ? 57 48 83 EC ? 48 8B") + " " + "DA BA F2 C9 10 1B");
+
+        return tryGet<AABBShapeComponent>(sig);
 	}
 
     bool getActorFlag(int flag) {

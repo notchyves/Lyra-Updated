@@ -16,20 +16,15 @@ public:
     void unpatch() const;
 
 private:
-    Vec2 oldRotations;
-    static inline uintptr_t yaw1 = Memory::findSig("F3 0F 11 ? F3 0F 11 ? ? 48 8B CE");
-    static inline uintptr_t yaw2 = Memory::findSig("F3 0F 11 ? F3 0F 11 ? ? 48 8B 4D");
-    static inline uintptr_t pitch = Memory::findSig("F3 0F 11 0E 48 89 9C");
-    static inline uintptr_t rot = Memory::findSig("F3 0F 11 38 ? ? 7C 24 ? 48 81 C4");
-    static inline uintptr_t movement = Memory::findSig("F3 0F 11 01 48 8D 56");
+    static inline uintptr_t yaw1;
+    static inline uintptr_t yaw2;
+    static inline uintptr_t pitch;
+    static inline uintptr_t movement;
 
-    static inline std::vector<uint8_t> OriginalYaw1;
-    static inline std::vector<uint8_t> PatchedYaw1;
-    static inline std::vector<uint8_t> OriginalYaw2;
-    static inline std::vector<uint8_t> PatchedYaw2;
-    static inline std::vector<uint8_t> OriginalPitch;
-    static inline std::vector<uint8_t> PatchedPitch;
+    static inline uint8_t nop[4] = { 0x90, 0x90, 0x90, 0x90 };
 
-    static inline std::vector<uint8_t> Originalmovement;
-    static inline std::vector<uint8_t> Patchedmovement;
+    static inline std::array<std::byte, 4> originalYaw1;
+    static inline std::array<std::byte, 4> originalYaw2;
+    static inline std::array<std::byte, 4> originalPitch;
+    static inline std::array<std::byte, 4> originalMovement;
 };

@@ -117,7 +117,7 @@ auto RenderUtils::drawRect(ImVec2 rectPos, ImVec2 rectSize, ImColor color, float
 };
 
 void RenderUtils::RenderImage(ImVec2 Pos, ImVec2 size, std::string imagePath, ImColor imgColour, ImDrawList* drawList) {
-	if (d3d12Device == nullptr) {
+	/*if (d3d12Device == nullptr) {
 		if (images[imagePath] == nullptr) {
 			std::string path = getenv("AppData") + (std::string)"\\..\\Local\\Packages\\Microsoft.MinecraftUWP_8wekyb3d8bbwe\\RoamingState\\" + imagePath;
 			bool ret = LoadTextureFromFile(path.c_str(), &images[imagePath], (int*)&size.x, (int*)&size.y);
@@ -158,7 +158,9 @@ void RenderUtils::RenderImage(ImVec2 Pos, ImVec2 size, std::string imagePath, Im
 		else {
 			drawList->AddImage(imagesDX12[imagePath], Pos, ImVec2(Pos.x + size.x, Pos.y + size.y), ImVec2(0, 0), ImVec2(1, 1), imgColour);
 		}
-	}
+	}*/
+
+	// temp fix dont render images :D
 }
 
 bool RenderUtils::LoadTextureFromFileDX12(const char* filename, ID3D12Device* d3d_device, D3D12_CPU_DESCRIPTOR_HANDLE srv_cpu_handle, ID3D12Resource** out_tex_resource, int* out_width, int* out_height)

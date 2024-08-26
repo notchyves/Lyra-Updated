@@ -11,15 +11,17 @@ std::string BlockOutline::getModuleName() {
 }
 
 void BlockOutline::InitModuleSettings() {
-    highlightColorRipRelAddr = Memory::findSig("? ? ? ? 0F 11 45 ? 0F 11 00 C6 40 10 ? 45 38 96"); // blockHighlightColor RIP REL 4BYTE FROM FUNC OFFSET ADDR
+    highlightColorRipRelAddr = Memory::findSig("? ? ? ? 0F 11 45 ? 0F 11 00 C6 40 10 ? 45 38 96"); // RIP REL 4BYTE FROM FUNC OFFSET ADDR
+    if (highlightColorRipRelAddr == NULL) return;
     highlightColorOrigRipRel = *(UINT32*)highlightColorRipRelAddr;
 
-    outlineColorRipRelAddr = Memory::findSig("? ? ? ? 0F 11 00 C6 40 10 ? 0F 57 C9 0F 11 4D"); // mce::Color::BLACK
+    outlineColorRipRelAddr = Memory::findSig("? ? ? ? 0F 11 00 C6 40 10 ? 0F 57 C9 0F 11 4D");
+    if (outlineColorRipRelAddr == NULL) return;
     outlineColorOrigRipRel = *(UINT32*)outlineColorRipRelAddr;
 
     selectionColor = (MCCColor*)AllocateBuffer((void*)highlightColorRipRelAddr); // allocate space for color
     highlightColorNewRipRel = Memory::getRipRel(highlightColorRipRelAddr, reinterpret_cast<uintptr_t>((void*)selectionColor));
-    outlineColorNewRipRel= Memory::getRipRel(outlineColorRipRelAddr, reinterpret_cast<uintptr_t>((void*)selectionColor));
+    outlineColorNewRipRel = Memory::getRipRel(outlineColorRipRelAddr, reinterpret_cast<uintptr_t>((void*)selectionColor));
     *selectionColor = MCCColor{};
 
 	Settings::addSetting<bool>(getModuleName(), "enabled", false, true);
@@ -29,15 +31,17 @@ void BlockOutline::InitModuleSettings() {
 
 void BlockOutline::onEnable() {
 	Settings::getSettingByName<bool>(getModuleName(), "enabled")->value = true;
-    Memory::patchBytes((void *) highlightColorRipRelAddr, highlightColorNewRipRel.data(), sizeof(UINT32));
-    Memory::patchBytes((void *) outlineColorRipRelAddr, outlineColorNewRipRel.data(), sizeof(UINT32));
+    if (highlightColorRipRelAddr == NULL || outlineColorRipRelAddr == NULL) return;
+    Memory::patchBytes((void*)highlightColorRipRelAddr, highlightColorNewRipRel.data(), sizeof(UINT32));
+    Memory::patchBytes((void*)outlineColorRipRelAddr, outlineColorNewRipRel.data(), sizeof(UINT32));
 	eventMgr.addListener(this);
 }
 
 void BlockOutline::onDisable() {
 	Settings::getSettingByName<bool>(getModuleName(), "enabled")->value = false;
-    Memory::patchBytes((void *) highlightColorRipRelAddr, &highlightColorOrigRipRel, sizeof(UINT32));
-    Memory::patchBytes((void *) outlineColorRipRelAddr, &outlineColorOrigRipRel, sizeof(UINT32));
+    if (highlightColorRipRelAddr == NULL || outlineColorRipRelAddr == NULL) return;
+    Memory::patchBytes((void*)highlightColorRipRelAddr, &highlightColorOrigRipRel, sizeof(UINT32));
+    Memory::patchBytes((void*)outlineColorRipRelAddr, &outlineColorOrigRipRel, sizeof(UINT32));
 	eventMgr.removeListener(this);
 }
 

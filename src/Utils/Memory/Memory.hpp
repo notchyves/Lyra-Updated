@@ -86,6 +86,12 @@ public:
         return (*static_cast<Fn**>(thisptr))[IIdx](thisptr, argList...);
     }
 
+    template <typename TRet, typename... TArgs>
+    static auto CallVFuncI(uint32_t index, void* thisptr, TArgs... argList) -> TRet {
+        using Fn = TRet(__thiscall*)(void*, TArgs...);
+        return (*static_cast<Fn**>(thisptr))[index](thisptr, std::forward<TArgs>(argList)...);
+    }
+
     template <typename Ret, typename Type>
     static Ret& direct_access(Type* type, size_t offset) {
         return hat::member_at<Ret>(type, offset);

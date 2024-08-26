@@ -24,7 +24,6 @@
 #include "Modules/WeatherChanger.hpp"
 #include "Modules/Fullbright.hpp"
 #include "Modules/Notif.hpp"
-#include "Modules/PotCounter.hpp"
 #include "Modules/IPDisplay.hpp"
 #include "Modules/Tablist.hpp"
 #include "Modules/MotionBlur.hpp"
@@ -32,9 +31,6 @@
 #include "Modules/Momentum.hpp"
 #include "Modules/Playtime.hpp"
 #include "Modules/ShinyPots.hpp"
-#include "Modules/ArrowCounter.hpp"
-#include "Modules/SoupCounter.hpp"
-#include "Modules/ArmorStats.hpp"
 #include "Modules/Hitbox.hpp"
 #include "Modules/CPS_Limiter.hpp"
 #include "Modules/FoodPoints.hpp"
@@ -56,31 +52,31 @@ void ModuleManager::initModules() {
     this->addModule(std::make_shared<FreeLook>(FreeLook()));
     this->addModule(std::make_shared<SnapLook>(SnapLook()));
     this->addModule(std::make_shared<IPDisplay>(IPDisplay()));
-    this->addModule(std::make_shared<Coordinates>(Coordinates()));
+    //this->addModule(std::make_shared<Coordinates>(Coordinates()));
     this->addModule(std::make_shared<Momentum>(Momentum()));
-    this->addModule(std::make_shared<ComboCounter>(ComboCounter()));
-    this->addModule(std::make_shared<ReachDisplay>(ReachDisplay()));
+    //this->addModule(std::make_shared<ComboCounter>(ComboCounter()));
+    //this->addModule(std::make_shared<ReachDisplay>(ReachDisplay()));
     this->addModule(std::make_shared<ThirdPersonNametag>(ThirdPersonNametag()));
     this->addModule(std::make_shared<NoHurtCam>(NoHurtCam()));
-    this->addModule(std::make_shared<BlockOutline>(BlockOutline()));
+    //this->addModule(std::make_shared<BlockOutline>(BlockOutline()));
     this->addModule(std::make_shared<Ping>(Ping()));
-    this->addModule(std::make_shared<Keystroke>(Keystroke()));
+    //this->addModule(std::make_shared<Keystroke>(Keystroke()));
     this->addModule(std::make_shared<FogColour>(FogColour()));
-    this->addModule(std::make_shared<HurtColor>(HurtColor()));
+    //this->addModule(std::make_shared<HurtColor>(HurtColor()));
     this->addModule(std::make_shared<Notif>(Notif()));
-    this->addModule(std::make_shared<PotCounter>(PotCounter()));
+    //this->addModule(std::make_shared<PotCounter>(PotCounter()));
     this->addModule(std::make_shared<WeatherChanger>(WeatherChanger()));
     this->addModule(std::make_shared<Fullbright>(Fullbright()));
-    this->addModule(std::make_shared<Tablist>(Tablist()));
+    //this->addModule(std::make_shared<Tablist>(Tablist()));
     this->addModule(std::make_shared<Playtime>(Playtime()));
     this->addModule(std::make_shared<ShinyPots>(ShinyPots()));
     this->addModule(std::make_shared<MotionBlur>(MotionBlur()));
-    this->addModule(std::make_shared<ArrowCounter>(ArrowCounter()));
-    this->addModule(std::make_shared<SoupCounter>(SoupCounter()));
+    //this->addModule(std::make_shared<ArrowCounter>(ArrowCounter()));
+    //this->addModule(std::make_shared<SoupCounter>(SoupCounter()));
     //this->addModule(std::make_shared<ArmorStats>(ArmorStats()));
-    this->addModule(std::make_shared<Hitbox>(Hitbox()));
+    //this->addModule(std::make_shared<Hitbox>(Hitbox()));
     this->addModule(std::make_shared<CPS_Limiter>(CPS_Limiter()));
-    this->addModule(std::make_shared<FoodPoints>(FoodPoints()));
+    //this->addModule(std::make_shared<FoodPoints>(FoodPoints()));
     this->addModule(std::make_shared<Profiles>(Profiles()));
     //this->addModule(std::make_shared<CustomChat>(CustomChat()));
     this->addModule(std::make_shared<helper>(helper()));

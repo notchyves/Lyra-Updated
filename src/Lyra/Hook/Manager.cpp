@@ -38,7 +38,7 @@ void HookManager::initialize() {
     hooks.push_back(new DirectXHook());
     hooks.push_back(new ResizeHook());
     hooks.push_back(new MouseHook());
-    hooks.push_back(new SetupAndRenderHook()); // need fixing
+    hooks.push_back(new SetupAndRenderHook());
     hooks.push_back(new ActorNormalTickHook());
     hooks.push_back(new GetViewPerspective());
     hooks.push_back(new OverworldGetFogColorHook());
@@ -48,7 +48,7 @@ void HookManager::initialize() {
     //hooks.push_back(new SendPacketHook()); // need fixing
     hooks.push_back(new FontDrawTransformedHook());
     //hooks.push_back(new AddGuiMessage()); // need fixing
-    hooks.push_back(new RenderHighlightSelectionHook());
+    // hooks.push_back(new RenderHighlightSelectionHook()); // deprecated
 
     for (auto hook : hooks)
         hook->enableHook();

@@ -6,37 +6,16 @@ bool shouldFreelook = false;
 
 FreeLook::FreeLook() : ModuleCtor(67, "Freelook", "freelook") {
 	this->InitModuleSettings();
-    OriginalYaw1.resize(4);
-    memcpy(OriginalYaw1.data(), (LPVOID)yaw1, 4);
+    
+    yaw1 = Memory::findSig("F3 0F 11 ? F3 0F 11 ? ? 48 8B CE");
+    yaw2 = Memory::findSig("F3 0F 11 ? F3 0F 11 ? ? 48 8B 4D");
+    pitch = Memory::findSig("F3 0F 11 0E 48 89 9C");
+    movement = Memory::findSig("F3 0F 11 01 48 8D 56");
 
-    OriginalYaw2.resize(4);
-    memcpy(OriginalYaw2.data(), (LPVOID)yaw2, 4);
-
-    OriginalPitch.resize(4);
-    memcpy(OriginalPitch.data(), (LPVOID)pitch, 4);
-
-    Originalmovement.resize(4);
-    memcpy(Originalmovement.data(), (LPVOID)movement, 4);
-
-    PatchedYaw1.push_back(0x90);
-    PatchedYaw1.push_back(0x90);
-    PatchedYaw1.push_back(0x90);
-    PatchedYaw1.push_back(0x90);
-
-    PatchedYaw2.push_back(0x90);
-    PatchedYaw2.push_back(0x90);
-    PatchedYaw2.push_back(0x90);
-    PatchedYaw2.push_back(0x90);
-
-    PatchedPitch.push_back(0x90);
-    PatchedPitch.push_back(0x90);
-    PatchedPitch.push_back(0x90);
-    PatchedPitch.push_back(0x90);
-
-    Patchedmovement.push_back(0x90);
-    Patchedmovement.push_back(0x90);
-    Patchedmovement.push_back(0x90);
-    Patchedmovement.push_back(0x90);
+    originalYaw1 = std::bit_cast<std::array<std::byte, 4>>(*(std::byte(*)[4])yaw1);
+    originalYaw2 = std::bit_cast<std::array<std::byte, 4>>(*(std::byte(*)[4])yaw2);
+    originalPitch = std::bit_cast<std::array<std::byte, 4>>(*(std::byte(*)[4])pitch);
+    originalMovement = std::bit_cast<std::array<std::byte, 4>>(*(std::byte(*)[4])movement);
 }
 
 
@@ -78,21 +57,15 @@ void FreeLook::onTick(const TickEvent& event) {
 }
 
 void FreeLook::patch() const {
-    Memory::patchBytes((LPVOID)yaw1, PatchedYaw1.data(), PatchedYaw1.size());
-
-    Memory::patchBytes((LPVOID)yaw2, PatchedYaw2.data(), PatchedYaw2.size());
-
-    Memory::patchBytes((LPVOID)pitch, PatchedPitch.data(), PatchedPitch.size());
-
-    Memory::patchBytes((LPVOID)movement, Patchedmovement.data(), Patchedmovement.size());
+    Memory::patchBytes((void*)yaw1, nop, 4);
+    Memory::patchBytes((void*)yaw2, nop, 4);
+    Memory::patchBytes((void*)pitch, nop, 4);
+    Memory::patchBytes((void*)movement, nop, 4);
 }
 
 void FreeLook::unpatch() const {
-    Memory::patchBytes((LPVOID)yaw1, OriginalYaw1.data(), OriginalYaw1.size());
-
-    Memory::patchBytes((LPVOID)yaw2, OriginalYaw2.data(), OriginalYaw2.size());
-
-    Memory::patchBytes((LPVOID)pitch, OriginalPitch.data(), OriginalPitch.size());
-
-    Memory::patchBytes((LPVOID)movement, Originalmovement.data(), Originalmovement.size());
+    Memory::patchBytes((void*)yaw1, originalYaw1.data(), 4);
+    Memory::patchBytes((void*)yaw2, originalYaw2.data(), 4);
+    Memory::patchBytes((void*)pitch, originalPitch.data(), 4);
+    Memory::patchBytes((void*)movement, originalMovement.data(), 4);
 }

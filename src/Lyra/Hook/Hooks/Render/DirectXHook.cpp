@@ -25,6 +25,7 @@
 #include "../../../ImGUI/imgui_impl_dx12.h"
 #include "../../../ImGUI/imgui_impl_win32.h"
 #include "../../../ImGui/Fonts/ProductSans.h"
+#include "../../../ImGui/Fonts/Mojangles.h"
 #include "../../../Event/EventManager.hpp"
 #include "../../../../Utils/RenderUtils.h"
 
@@ -137,7 +138,7 @@ HRESULT DirectXHook::DirectXCallback(IDXGISwapChain3* ppSwapChain, UINT syncInte
 
 			ImGui::CreateContext();
 			auto gg = ImGui::GetIO().Fonts->AddFontFromMemoryCompressedTTF(ProductSans_compressed_data, ProductSans_compressed_size, 100.f);
-			auto ungg = ImGui::GetIO().Fonts->AddFontFromFileTTF((Utils::getRoamingPath() + "\\Lyra\\assets\\mojangles.ttf").c_str(), 60);
+			auto ungg = ImGui::GetIO().Fonts->AddFontFromMemoryCompressedTTF(mojangles_compressed_data, mojangles_compressed_size, 75.f); // temp fix until i get assets
 			//ImGui::GetIO().Fonts->AddFontDefault(gg->ConfigData);
 			RenderUtils::SetFontConfig(ungg, gg);
 			contextInitialized = true;

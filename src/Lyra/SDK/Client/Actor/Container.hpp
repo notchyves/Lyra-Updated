@@ -10,6 +10,6 @@ public:
 	}
 
 	ItemStack* getitem(int slot) {
-		return Memory::CallVFunc<5, ItemStack *>(this, slot);
+		return Memory::CallVFunc<7, ItemStack *>(this, slot);
 	}
 };

@@ -10,13 +10,6 @@ private:
 
     static MCCColor *HurtColorCallback(void *a1, MCCColor *color, void *a3) {
         MCCColor* col = funcOriginal(a1, color, a3);
-        if (Settings::getSettingByName<bool>("Hurt Color", "enabled")->value) {
-            std::vector<float> color = Settings::getSettingByName<std::vector<float>>("Hurt Color", "Hurt Color")->value;
-            col->r = color.at(0);
-            col->g = color.at(1);
-            col->b = color.at(2);
-            col->a = color.at(3);
-        }
 
         return col;
     }
