@@ -29,7 +29,7 @@ void Hitbox::onDisable() {
 	eventMgr.removeListener(this);
 }
 
-void Hitbox::onRenderLevel(const RenderLevelEvent& event) {
+void Hitbox::onRender(const RenderEvent &event) {
 	if(!SDK::clientInstance || !SDK::clientInstance->getLocalPlayer()) return;
 	if (SDK::clientInstance->getLocalPlayer()) {
 		TessUtils::begin(VertexFormat::LINE_LIST);

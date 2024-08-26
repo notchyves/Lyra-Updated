@@ -9,10 +9,10 @@
 
 class ClientInstance {
 public:
-	BUILD_ACCESS(this, GuiData*, guiData, 0x560);
-	BUILD_ACCESS(this, float*, FovX, 0x6A0);
+	BUILD_ACCESS(this, GuiData*, guiData, 0x558);
+	BUILD_ACCESS(this, float*, FovX, 0x6F0);
 	BUILD_ACCESS(this, MCGame*, mcgame, 0xC8);
-	BUILD_ACCESS(this, float*, FovY, 0x6B4);
+	BUILD_ACCESS(this, float*, FovY, 0x704);
 
 	void grabMouse() {
 		Memory::CallVFunc<331, void>(this);

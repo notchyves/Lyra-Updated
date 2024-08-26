@@ -18,7 +18,7 @@
 void DownloadFile(std::string fname, bool png) {
     if (!std::filesystem::exists(Utils::getRoamingPath() + "\\Lyra\\assets\\" + fname + (png ? ".png" : "")))
     {
-        std::string from = "http://51.255.80.24:1900/Launcher/Assets/" + fname +  + (png ? ".png" : "");
+        std::string from = "http://51.255.80.24:1900/Launcher/Assets/" + fname +  + (png ? ".png" : ""); // replace w github with actual assets LOL
         std::string file = Utils::getRoamingPath() + "\\Lyra\\assets\\" + fname +  + (png ? ".png" : "");
         URLDownloadToFileA(NULL, from.c_str(), file.c_str(), 0, NULL);
     }

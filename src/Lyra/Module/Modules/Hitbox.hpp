@@ -8,5 +8,5 @@ public:
     void onEnable() override;
     void onDisable() override;
     void InitModuleSettings() override;
-    void onRenderLevel(const RenderLevelEvent& event) override;
+    void onRender(const RenderEvent &event) override;
 };

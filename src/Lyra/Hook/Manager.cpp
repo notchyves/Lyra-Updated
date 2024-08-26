@@ -38,18 +38,17 @@ void HookManager::initialize() {
     hooks.push_back(new DirectXHook());
     hooks.push_back(new ResizeHook());
     hooks.push_back(new MouseHook());
-    hooks.push_back(new SetupAndRenderHook());
+    hooks.push_back(new SetupAndRenderHook()); // need fixing
     hooks.push_back(new ActorNormalTickHook());
     hooks.push_back(new GetViewPerspective());
     hooks.push_back(new OverworldGetFogColorHook());
     hooks.push_back(new HurtColorHook());
     hooks.push_back(new getGammaHook());
     hooks.push_back(new GameModeAttackHook());
-    hooks.push_back(new RenderLevel());
-    hooks.push_back(new SendPacketHook());
+    //hooks.push_back(new SendPacketHook()); // need fixing
     hooks.push_back(new FontDrawTransformedHook());
-    hooks.push_back(new AddGuiMessage());
-    //hooks.push_back(new RenderHighlightSelectionHook());
+    //hooks.push_back(new AddGuiMessage()); // need fixing
+    hooks.push_back(new RenderHighlightSelectionHook());
 
     for (auto hook : hooks)
         hook->enableHook();
