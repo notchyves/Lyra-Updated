@@ -64,23 +64,6 @@ void KeyHook::keyCallback(int key, bool state)
 		else {
 			RenderUtils::CloseMenu = true;
 		}
-	if (!moduleMgr.getModuleG("Mod Menu")->isEnabled() and !menuSelector.enabled and (key == Settings::getSettingByName<int>("Mod Menu", "Friend List Keybind")->value or key == VK_ESCAPE) and !state and !RenderUtils::anyActivetextbox() and !RenderUtils::anyKeybindActive()) {
-        std::string badthing = "�";
-        if(SDK::clientInstance && SDK::clientInstance->getLocalPlayer()) Logger::info(removeCharFromString(base64::to_base64(Utils::removeColorCodes(SDK::clientInstance->getLocalPlayer()->playerName)), *badthing.c_str()));
-        if (key == VK_ESCAPE) {
-			FriendSys.enabled = false;
-            FriendSys.onDisable();
-		}
-		else {
-            std::thread friendThread([]() {
-                moduleMgr.HeartBeatFriends();
-
-            });
-            friendThread.detach();
-
-			FriendSys.toggle();
-		}
-	}
 	eventMgr.onKey(event);
 	if (!event.isCancelled())
 		func_original(key, state);
